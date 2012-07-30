@@ -1,6 +1,6 @@
 <?php
 /*********************************************************************
-    syslogs.php
+    logs.php
 
     System Logs
 
@@ -23,7 +23,8 @@ if($_POST){
             }else{
                 $count=count($_POST['ids']);
                 if($_POST['delete']){
-                    $sql='DELETE FROM '.SYSLOG_TABLE.' WHERE log_id IN ('.implode(',',$_POST['ids']).')';
+                    $sql='DELETE FROM '.SYSLOG_TABLE.' WHERE log_id IN ('
+                        .implode(',', db_input($_POST['ids'])).')';
                     if(db_query($sql) && ($num=db_affected_rows())){
                         if($num==$count)
                             $msg='Selected logs deleted successfully';
@@ -42,8 +43,6 @@ if($_POST){
     }
 }
 
-
-  
 $page='syslogs.inc.php';
 $nav->setTabActive('dashboard');
 require(STAFFINC_DIR.'header.inc.php');
