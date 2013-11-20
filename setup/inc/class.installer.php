@@ -189,7 +189,7 @@ class Installer extends SetupWizard {
 				'alert_email_id'=>$alert_email_id, 'default_dept_id'=>$dept_id_1, 'default_sla_id'=>$sla_id_1,
 				'default_timezone_id'=>$eastern_timezone, 'default_template_id'=>$template_id_1,
 				'admin_email'=>db_input($vars['admin_email']),
-				'schema_signature'=>db_input($signature),
+				'schema_signature'=>db_input($streams['core']),
 				'helpdesk_url'=>db_input(URL),
 				'helpdesk_title'=>db_input($vars['name']));
 			foreach ($defaults as $key=>$value) {
