@@ -201,9 +201,9 @@ class Installer extends SetupWizard {
 			
 			foreach($streams as $stream=>$signature){
 				if($stream!='core'){
-				    $sql='INSERT INTO '.PREFIX.'config (namespace, key, value, updated) '
+				    $sql='INSERT INTO '.PREFIX.'config (`namespace`, `key`, `value`, `updated`) '
 				    .'VALUES ('.db_input($stream).', '.db_input('schema_signature')
-				    .', '.db_input($signature).', NOW()';
+				    .', '.db_input($signature).', NOW())';		    
 				    if(!db_query($sql, false))
 	                		$this->errors['err']='Unable to create config settings (#7)';
 				}
