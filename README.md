@@ -1,3 +1,29 @@
+Basic Client Auth + CC Emails MOD
+=================================
+Starting from WalterEgo's work, I wrote a MOD implementing full support 
+for CC emails AND simple password authentication for users, therefore
+avoiding security issues.
+
+As for CC emails, it works more or less as described in this post
+http://www.osticket.com/forums/forum/osticket-1-7-latest-release/suggestions-and-feedback-aa/9538-send-email-cc-to-alternative-email-adresses?p=44014#post44014
+(cc opt out feature is still missing, I still have to work on that)
+
+As for password auth for users, instead of modifying the whole auth system 
+based on email and ticket ID (otherwise it would become more of a fork 
+rather than a simple MOD), I implemented a little workaround so that user 
+login page asks for a password (required) and a ticket ID (optional), and 
+if no (valid) ticket ID is provided (but the password is correct), the 
+program picks up the first ticket id available for that user and then logs
+him/her in, redirecting him/her to ticket list page.
+User passwords are automatically created by the program and sent via email
+to users, and can be changed by users after loggin in (there is also a 
+"remember me" flag so users do not need to insert email and password every
+time).
+It is not exactly the best auth system ever :) but I just needed a quick 
+and dirty MOD to implement CC emails with a minimum of security.
+
+
+
 osTicket
 ========
 osTicket is a widely-used open source support ticket system. It seamlessly
