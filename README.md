@@ -2,7 +2,8 @@ Basic Client Auth + CC Emails MOD
 =================================
 Starting from WalterEgo's work, I wrote a MOD implementing full support 
 for CC emails AND simple password authentication for users, therefore
-avoiding security issues.
+avoiding security issues (see here
+https://github.com/osTicket/osTicket-1.7/issues/506#issuecomment-14901859)
 
 As for CC emails, it works more or less as described in this post
 http://www.osticket.com/forums/forum/osticket-1-7-latest-release/suggestions-and-feedback-aa/9538-send-email-cc-to-alternative-email-adresses?p=44014#post44014
