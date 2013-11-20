@@ -43,7 +43,20 @@ if(!$dept || !$dept->isPublic())
                </tr>
                <tr>
                    <th width="100">Email:</th>
-                   <td><?php echo Format::htmlchars($ticket->getEmail()); ?></td>
+
+                   <td>
+<!-- Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from Walterego CC Multiple Emails MOD) -->
+                   <?php 
+                   echo Format::htmlchars($ticket->getEmail()); 
+                   $cc_emails = $ticket->getCCEmails();
+                   if($cc_emails != '')
+                   {
+                       $cc_emails=str_replace(',',', ',$cc_emails);
+                       echo '<br />+ '.$cc_emails;
+                   }
+                   ?>
+<!-- End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD -->
+                   </td>
                </tr>
                <tr>
                    <th>Phone:</th>
@@ -72,7 +85,7 @@ if($ticket->getThreadCount() && ($thread=$ticket->getClientThread())) {
             $poster = ' ';
         ?>
         <table class="<?php echo $threadType[$entry['thread_type']]; ?>" cellspacing="0" cellpadding="1" width="800" border="0">
-            <tr><th><?php echo Format::db_datetime($entry['created']); ?> &nbsp;&nbsp;<span><?php echo $poster; ?></span></th></tr>
+            <tr><th><?php echo Format::db_datetime($entry['created']); ?> &nbsp;&nbsp;<span><?php echo Format::htmlchars($poster); ?></span></th></tr>
             <tr><td><?php echo Format::display($entry['body']); ?></td></tr>
             <?php
             if($entry['attachments']

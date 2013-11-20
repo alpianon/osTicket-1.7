@@ -84,7 +84,9 @@ class Mailer {
         $this->attachments = array_merge($this->attachments, $attachments);
     }
 
-    function send($to, $subject, $message, $options=null) {
+    /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+    function send($to, $subject, $message, $options=null, $cc=null) {
+    /* end EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
         global $ost;
 
         //Get the goodies
@@ -101,14 +103,18 @@ class Mailer {
         $messageId = sprintf('<%s%d-%s>', Misc::randCode(6), time(),
                 ($this->getEmail()?$this->getEmail()->getEmail():'@osTicketMailer'));
 
-        $headers = array (
-                'From' => $this->getFromAddress(),
-                'To' => $to,
-                'Subject' => $subject,
-                'Date'=> date('D, d M Y H:i:s O'),
-                'Message-ID' => $messageId,
-                'X-Mailer' =>'osTicket Mailer'
-               );
+        /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+        $headers = array ();
+        $headers['From'] = $this->getFromAddress();
+        $headers['To'] = $to;
+        $headers['Subject'] = $subject;
+        if ($cc != null) {
+            $headers['Cc'] = $cc;
+        }
+        $headers['Date'] = date('D, d M Y H:i:s O');
+        $headers['Message-ID'] = $messageId;
+        $headers['X-Mailer'] = 'osTicket Mailer';
+        /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
 
         //Set bulk/auto-response headers.
         if($options && ($options['autoreply'] or $options['bulk'])) {

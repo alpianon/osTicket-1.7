@@ -44,6 +44,20 @@ $info=Format::htmlchars(($errors && $_POST)?$_POST:$info);
                 &nbsp;<span class="error">*&nbsp;<?php echo $errors['name']; ?></span>
             </td>
         </tr>
+         <!-- Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS MOD)  
+added cc emails input -->
+        <tr>
+            <td width="160">
+                CC Email Address(es):
+            </td>
+            <td>
+             
+                <input type="text" size="50" name="cc_emails" id="cc_emails" value="<?php echo $info['cc_emails']; ?>"
+                    autocomplete="off" autocorrect="off" autocapitalize="off">
+                &nbsp;<span class="error">*&nbsp;<?php echo $errors['cc_emails']; ?></span>
+            </td>
+        </tr>
+        <!-- eND EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD -->        
         <tr>
             <td width="160">
                 Phone Number:

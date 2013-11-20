@@ -186,6 +186,13 @@
     define('TICKET_LOCK_TABLE',TABLE_PREFIX.'ticket_lock');
     define('TICKET_EVENT_TABLE',TABLE_PREFIX.'ticket_event');
     define('TICKET_EMAIL_INFO_TABLE',TABLE_PREFIX.'ticket_email_info');
+    /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS MOD) */
+    define('TICKET_CC_EMAILS_TABLE',TABLE_PREFIX.'ticket_cc_emails');
+    /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+
+// Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+    define('CLIENT_PASSWORDS_TABLE',TABLE_PREFIX.'client_passwords');
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
     define('EMAIL_TABLE',TABLE_PREFIX.'email');
     define('EMAIL_TEMPLATE_GRP_TABLE',TABLE_PREFIX.'email_template_group');

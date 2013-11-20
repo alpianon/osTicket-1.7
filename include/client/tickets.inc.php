@@ -41,10 +41,14 @@ $$x=' class="'.strtolower($order).'" ';
 $qselect='SELECT ticket.ticket_id,ticket.ticketID,ticket.dept_id,isanswered, dept.ispublic, ticket.subject, ticket.name, ticket.email '.
            ',dept_name,ticket. status, ticket.source, ticket.created ';
 
+// Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from Walterego CC Multiple Emails MOD)
 $qfrom='FROM '.TICKET_TABLE.' ticket '
-      .' LEFT JOIN '.DEPT_TABLE.' dept ON (ticket.dept_id=dept.dept_id) ';
+      .' LEFT JOIN '.DEPT_TABLE.' dept ON (ticket.dept_id=dept.dept_id) '
+      .' LEFT JOIN '.TICKET_CC_EMAILS_TABLE.' cc_emails ON (ticket.ticket_id=cc_emails.ticket_id) ';  
 
-$qwhere =' WHERE ticket.email='.db_input($thisclient->getEmail());
+$qwhere =' WHERE ( ticket.email='.db_input($thisclient->getEmail())
+         .' OR cc_emails.email='.db_input($thisclient->getEmail()).' ) ';     
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
 if($status){
     $qwhere.=' AND ticket.status='.db_input($status);

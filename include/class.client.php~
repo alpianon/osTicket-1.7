@@ -192,10 +192,10 @@ class Client {
             $errors['login'] = 'Invalid method';
 // Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
         elseif(!Validator::is_email($email))
-            $errors['login'] = /*__(*/'Valid email required'/*)*/;
+            $errors['login'] = __('Valid email required');
 
         elseif(!($res=db_query($sql)) || !db_num_rows($res))
-            $errors['login'] = /*__(*/'this email has not been registered yet'/*)*/;
+            $errors['login'] = __('this email has not been registered yet');
         $spwd=db_fetch_array($res);
 // End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 

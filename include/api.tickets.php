@@ -19,9 +19,12 @@ class TicketApiController extends ApiController {
         );
 
         if(!strcasecmp($format, 'email'))
+// Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+// added support for cc_emails in case of ticket opened via email        
             $supported = array_merge($supported, array('header', 'mid',
-                'emailId', 'ticketId', 'reply-to', 'reply-to-name',
+                'emailId', 'ticketId', 'cc_emails', 'reply-to', 'reply-to-name',
                 'in-reply-to', 'references'));
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
         return $supported;
     }

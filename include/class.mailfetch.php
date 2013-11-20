@@ -248,6 +248,11 @@ class MailFetcher {
             return null;
 
         $sender=$headerinfo->from[0];
+        
+        /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+        $cc_emails = $this->getEmailAddressesFromToOrCc($headerinfo);
+        /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+        
         //Just what we need...
         $header=array('name'  =>@$sender->personal,
                       'email'  => trim(strtolower($sender->mailbox).'@'.$sender->host),
@@ -256,6 +261,9 @@ class MailFetcher {
                       'header' => $this->getHeader($mid),
                       'in-reply-to' => $headerinfo->in_reply_to,
                       'references' => $headerinfo->references,
+        /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+                      'cc_emails' =>$cc_emails
+        /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
                       );
 
         if ($replyto = $headerinfo->reply_to) {
@@ -289,6 +297,38 @@ class MailFetcher {
 
         return $header;
     }
+
+    /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+    function getEmailAddressesFromToOrCc($headerinfo) {
+
+        $cc_emails = array();
+        
+        $sender = strtolower($headerinfo->from[0]->mailbox.'@'.$headerinfo->from[0]->host);
+        $receiver = strtolower($this->getUsername());
+        
+        if(is_array($headerinfo->to)) 
+        {
+            foreach($headerinfo->to as $info) 
+            {
+                $address = strtolower($info->mailbox.'@'.$info->host);
+                
+                if(!in_array($address, array($sender, $receiver)) && !in_array($address, $cc_emails)) 
+                {
+                    $cc_emails[] = $address;
+                }
+            }
+        }
+        
+        if(count($cc_emails) > 0)
+        {
+            return implode(',', $cc_emails);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
 
     //search for specific mime type parts....encoding is the desired encoding.
     function getPart($mid, $mimeType, $encoding=false, $struct=null, $partNumber=false) {

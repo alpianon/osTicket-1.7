@@ -40,7 +40,9 @@ if($_POST && is_object($ticket) && $ticket->getId()):
 
         if(!$errors) {
             //Everything checked out...do the magic.
-            $vars = array('message'=>$_POST['message']);
+            /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+            $vars = array('message'=>$_POST['message'], 'poster'=>$_SESSION['_client']['userID']);
+            /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
             if($cfg->allowOnlineAttachments() && $_FILES['attachments'])
                 $vars['files'] = AttachmentFile::format($_FILES['attachments'], true);
 

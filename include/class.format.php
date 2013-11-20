@@ -242,6 +242,11 @@ class Format {
         return preg_replace("/\n{3,}/", "\n\n", $string);
     }
 
+    /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+    function stripWhiteSpace ($string) {
+        return preg_replace('/\s+/', '', $string);
+    }
+    /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
 
     function linebreaks($string) {
         return urldecode(ereg_replace("%0D", " ", urlencode($string)));
