@@ -11,18 +11,53 @@
     </style>
     <![endif]-->
     <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui-1.8.18.custom.min.js"></script>
+<!-- Start EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD
+added scripts to use tag-it to edit cc emails -->
+    <script type="text/javascript" src="../js/jquery-ui-1.8.18.min.js"></script>
+<!-- End EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD -->
     <script type="text/javascript" src="../js/jquery.multifile.js"></script>
     <script type="text/javascript" src="./js/tips.js"></script>
     <script type="text/javascript" src="./js/nicEdit.js"></script>
     <script type="text/javascript" src="./js/bootstrap-typeahead.js"></script>
     <script type="text/javascript" src="./js/scp.js"></script>
+<!-- Start EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD
+added scripts to use tag-it to edit cc emails -->
+    <script src="../js/tag-it.js" type="text/javascript"></script>
+<!-- End EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD -->
     <link rel="stylesheet" href="./css/scp.css" media="screen">
     <link rel="stylesheet" href="./css/typeahead.css" media="screen">
     <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="../css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="./css/dropdown.css">
+<!-- Start EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD
+added scripts to use tag-it to edit cc emails -->
+    <link href="../css/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="../css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+<!-- End EDIT for CC_EMAIL+BASIC_CLIENT_AUTH MOD -->    
     <script type="text/javascript" src="./js/jquery.dropdown.js"></script>
+	<script>
+/* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD 
+added scripts to use tag-it to edit cc emails */
+	
+	        $(function(){
+            var sampleTags = [
+            <?
+// autocomplete with registered users emails
+            $sql='SELECT email FROM '.CLIENT_PASSWORDS_TABLE;
+            $res=db_query($sql);
+            $_email=db_fetch_array($res);
+            echo "'".$_email['email']."'";
+            while($_email=db_fetch_array($res)){
+            echo ", '".$_email['email']."'";
+            }
+            ?>
+            ];
+            $('#cc_emails').tagit({
+                availableTags: sampleTags
+            });
+        });
+/* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD  */
+	</script>
     <?php
     if($ost && ($headers=$ost->getExtraHeaders())) {
         echo "\n\t".implode("\n\t", $headers)."\n";

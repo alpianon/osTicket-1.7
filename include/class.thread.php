@@ -521,11 +521,18 @@ Class ThreadEntry {
             'mid' =>    $mailinfo['mid'],
             'header' => $mailinfo['header'],
             'ticketId' => $ticket->getId(),
-            'poster' => $mailinfo['name'],
+            /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD*/
+            'poster' => $mailinfo['name']." <".$mailinfo['email'].">",
+            /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD*/
             'origin' => 'Email',
             'source' => 'Email',
             'ip' =>     '',
             'reply_to' => $this,
+            /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD 
+	    need to pass also these parameters in order to know who NOT to send autoreply */
+	    'cc_emails' => $mailinfo['cc_emails'],
+	    'email' => $mailinfo['email']
+	    /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD*/
         );
 
         if (isset($mailinfo['attachments']))
@@ -536,7 +543,10 @@ Class ThreadEntry {
         // Disambiguate if the user happens also to be a staff member of the
         // system. The current ticket owner should _always_ post messages
         // instead of notes or responses
-        if (strcasecmp($mailinfo['email'], $ticket->getEmail()) == 0) {
+        /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+        $all_emails=$ticket->getEmail().','.$ticket->getCCEmails();
+        if (stristr($all_emails, $mailinfo['email'])) {  // post message only if sender is the ticket owner or a CC
+        /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
             $vars['message'] = $body;
             return $ticket->postMessage($vars, 'Email');
         }

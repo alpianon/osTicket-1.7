@@ -47,7 +47,7 @@ $info=($_POST && $errors)?Format::htmlchars($_POST):$info;
 added cc_email addresses input
 -->   
     <tr>
-        <th class="required" width="160"><?php echo /*__(*/'CC Email Address(es) - comma separated'/*)*/;?>:</th>
+        <th class="required" width="160"><?php echo __('CC Email Address(es) - comma separated');?>:</th>
         <td>
                 <input id="cc_emails" type="text" name="cc_emails" size="30" value="<?php echo $info['cc_emails']; ?>">
                 <font class="error">*&nbsp;<?php echo $errors['cc_emails']; ?></font>            

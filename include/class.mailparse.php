@@ -348,18 +348,30 @@ class EmailDataParser {
         //TO Address:Try to figure out the email address... associated with the incoming email.
         $emailId = 0;
         if(($tolist = $parser->getToAddressList())) {
+/* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+take all to and cc email addresses which are not support system email addresses and put them into 'cc_emails'
+*/
             foreach ($tolist as $toaddr) {
-                if(($emailId=Email::getIdByEmail($toaddr->mailbox.'@'.$toaddr->host)))
-                    break;
+              $_email=$toaddr->mailbox.'@'.$toaddr->host;
+              if($_emailId=Email::getIdByEmail($_email)){
+                $emailId=$_emailId;
+              }else{
+                $data['cc_emails'].=$data['cc_emails']?','.$_email:$_email;
+              }
             }
         }
         //maybe we got CC'ed??
-        if(!$emailId && ($cclist=$parser->getCcAddressList())) {
+        if($cclist=$parser->getCcAddressList()) {
             foreach ($cclist as $ccaddr) {
-                if(($emailId=Email::getIdByEmail($ccaddr->mailbox.'@'.$ccaddr->host)))
-                    break;
+              $_email=$ccaddr->mailbox.'@'.$ccaddr->host;
+              if(!$emailId && ($_emailId=Email::getIdByEmail($_email))){
+                $emailId=$_emailId;
+              }else{
+                $data['cc_emails'].=$data['cc_emails']?','.$_email:$_email;
             }
         }
+        }
+/* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */        
 
         $data['subject'] = $parser->getSubject();
         $data['message'] = Format::stripEmptyLines($parser->getBody());

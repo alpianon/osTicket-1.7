@@ -1709,7 +1709,7 @@ when a ticket is deleted, delete also cc emails associated with it */
 
         $fields['note']     = array('type'=>'text',     'required'=>1, 'error'=>'Reason for the update required');
 // Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
-        $fields['cc_emails']= array('type'=>'email_list','required'=>0,'error'=>/*__(*/'invalid cc email address(es) provided'/*)*/);
+        $fields['cc_emails']= array('type'=>'email_list','required'=>0,'error'=>__('invalid cc email address(es) provided'));
 // End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
         if(!Validator::process($fields, $vars, $errors) && !$errors['err'])
@@ -2017,7 +2017,7 @@ when a ticket is deleted, delete also cc emails associated with it */
         $fields['phone']        = array('type'=>'phone',    'required'=>0, 'error'=>'Valid phone # required');
 
 // Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
-        $fields['cc_emails']= array('type'=>'email_list','required'=>0,'error'=>/*__(*/'Invalid cc email address(es)'/*)*/);
+        $fields['cc_emails']= array('type'=>'email_list','required'=>0,'error'=>__('Invalid cc email address(es)'));
 // End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
         if(!Validator::process($fields, $vars, $errors) && !$errors['err'])
@@ -2303,8 +2303,8 @@ when a ticket is deleted, delete also cc emails associated with it */
         	$rpwd = self::random_password();
         	$sql='INSERT INTO '.CLIENT_PASSWORDS_TABLE.' SET email='.db_input($email).' ,password='.db_input(md5($rpwd));
         	if(db_query($sql)){ 
-        		$subject=/*__(*/'New Account created for you on '/*)*/.$cfg->getTitle();
-        		$message=sprintf(/*__(*/"A new account has been automatically created for %1\$s on %2\$s\nPassword is %3\$s\nYou can login at %2\$slogin.php"/*)*/,$email,$cfg->getUrl(),$rpwd);
+        		$subject=__('New Account created for you on ').$cfg->getTitle();
+        		$message=sprintf(__("A new account has been automatically created for %1\$s on %2\$s\nPassword is %3\$s\nYou can login at %2\$slogin.php"),$email,$cfg->getUrl(),$rpwd);
         		Mailer::sendmail($email, $subject, $message, $cfg->getAlertEmail()->getEmail());
         	}
         	unset($rpwd);

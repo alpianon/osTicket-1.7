@@ -114,12 +114,17 @@ if($search):
         }elseif(strpos($searchTerm,'@') && Validator::is_email($searchTerm)){ //pulling all tricks!
             # XXX: What about searching for email addresses in the body of
             #      the thread message
-            $qwhere.=" AND ticket.email='$queryterm'";
+
+            $qwhere.=" AND (ticket.email='$queryterm' OR cc_emails.email='$queryterm') ";
         }else{//Deep search!
             //This sucks..mass scan! search anything that moves! 
             
             $deep_search=true;
             $qwhere.=" AND ( ticket.email LIKE '%$queryterm%'".
+/* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) 
+search also for cc emails */
+                        " OR cc_emails.email LIKE '%$queryterm%'".
+/* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
                         " OR ticket.name LIKE '%$queryterm%'".
                         " OR ticket.subject LIKE '%$queryterm%'".
                         " OR thread.body LIKE '%$queryterm%'".
@@ -248,7 +253,11 @@ $qselect ='SELECT DISTINCT ticket.ticket_id,lock_id,ticketID,ticket.dept_id,tick
          .' ,ticket.status,ticket.source,isoverdue,isanswered,ticket.created,pri.* ';
 
 $qfrom=' FROM '.TICKET_TABLE.' ticket '.
-       ' LEFT JOIN '.DEPT_TABLE.' dept ON ticket.dept_id=dept.dept_id ';
+       ' LEFT JOIN '.DEPT_TABLE.' dept ON ticket.dept_id=dept.dept_id '
+       /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS mod) */
+       .' LEFT JOIN '.TICKET_CC_EMAILS_TABLE.' cc_emails ON ('
+            .'ticket.ticket_id=cc_emails.ticket_id) ';
+       /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
 
 $sjoin='';
 if($search && $deep_search) {

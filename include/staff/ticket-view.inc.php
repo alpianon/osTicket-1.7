@@ -154,6 +154,12 @@ if($ticket->isOverdue())
                         if(($client=$ticket->getClient())) {
                             echo sprintf('&nbsp;&nbsp;<a href="tickets.php?a=search&query=%s" title="Related Tickets" data-dropdown="#action-dropdown-stats">(<b>%d</b>)</a>',
                                     urlencode($ticket->getEmail()), $client->getNumTickets());
+/* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+added cc_emails in ticket view */
+                                    $cc_emails = $ticket->getCCEmails();
+                   if($cc_emails != '')
+                       echo '<br />+ '.str_replace(',', ', ',$cc_emails);
+/* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
                         ?>
                             <div id="action-dropdown-stats" class="action-dropdown anchor-right">
                                 <ul>
@@ -413,6 +419,24 @@ if(!$cfg->showNotesInline()) { ?>
                         <?php echo ((!$info['emailreply'] && !$errors) || isset($info['emailreply']))?'checked="checked"':''; ?>> Email Reply</label>
                 </td>
             </tr>
+            <!-- Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+ (taken from WALTEREGO CC MULTIPLE EMAILS mod)
+added cc emails in ticket response form -->
+            <?php
+            $cc_emails = $ticket->getCCEmails();
+            if($cc_emails != '')
+            {
+            ?>
+            <tr>
+                <td width="160">
+                    <label><strong>CC:</strong></label>
+                </td>
+                <td width="765"><?php echo $cc_emails; ?></td>
+            </tr>
+            <?php
+            }
+            ?>
+            <!-- End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD -->
             <?php
             if($errors['response']) {?>
             <tr><td width="160">&nbsp;</td><td class="error"><?php echo $errors['response']; ?>&nbsp;</td></tr>

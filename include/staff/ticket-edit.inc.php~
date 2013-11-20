@@ -41,7 +41,7 @@ $info=Format::htmlchars(($errors && $_POST)?$_POST:$ticket->getUpdateInfo());
 
         <tr>
             <td width="160">
-                <?php echo /*__(*/'CC Email Address(es)'/*)*/;?>:
+                <?php echo __('CC Email Address(es)');?>:
             </td>
             <td>
                 <input type="text" size="50" name="cc_emails" id="cc_emails" value="<?php echo $info['cc_emails']; ?>">

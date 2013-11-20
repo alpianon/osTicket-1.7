@@ -28,10 +28,17 @@ if($_POST) {
         @header('Location: tickets.php?id='.$user->getTicketID());
         require_once('tickets.php'); //Just in case of 'header already sent' error.
         exit;
+		}else{ // if no ticket no. is provided, go to the ticket list
+		   @header('Location: tickets.php');
+		   require_once('tickets.php'); //Just in case of 'header already sent' error.
+		   exit;
+		}
     } elseif(!$errors['err']) {
         $errors['err'] = 'Authentication error - try again!';
     }
+	unset($_POST['lpass']);
 }
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
 $nav = new UserNav();
 $nav->setActiveNav('status');

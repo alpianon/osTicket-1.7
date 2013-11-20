@@ -59,7 +59,13 @@ class osTicketSession {
         register_shutdown_function('session_write_close');
 
         //Start the session.
+        
+        /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
+        /* Added if staement below to stop it moaning when running in cron */
+        if(@$_SERVER['HTTP_HOST'] != '') {
         session_start();
+    }
+        /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
     }
 
     function regenerate_id(){

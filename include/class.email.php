@@ -145,18 +145,20 @@ class Email {
         return $info;
     }
 
-    function send($to, $subject, $message, $attachments=null, $options=null) {
+    /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS MOD) */
+    function send($to, $subject, $message, $attachments=null, $options=null, $cc=null) {
 
         $mailer = new Mailer($this);
         if($attachments)
             $mailer->addAttachments($attachments);
 
-        return $mailer->send($to, $subject, $message, $options);
+        return $mailer->send($to, $subject, $message, $options, $cc);
     }
 
-    function sendAutoReply($to, $subject, $message, $attachments=null, $options=array()) {
+    function sendAutoReply($to, $subject, $message, $attachments=null, $options=array(), $cc=null) {
         $options+= array('autoreply' => true);
-        return $this->send($to, $subject, $message, $attachments, $options);
+        return $this->send($to, $subject, $message, $attachments, $options, $cc);
+    /* END EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
     }
 
     function sendAlert($to, $subject, $message, $attachments=null, $options=array()) {
