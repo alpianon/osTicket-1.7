@@ -198,6 +198,16 @@ class Installer extends SetupWizard {
 	            if(!db_query($sql, false))
 	                $this->errors['err']='Unable to create config settings (#7)';
 			}
+			
+			foreach($streams as $stream=>$signature){
+				if($stream!='core'){
+				    $sql='INSERT INTO '.PREFIX.'config (namespace, key, value, updated) '
+				    .'VALUES ('.db_input($stream).', '.db_input('schema_signature')
+				    .', '.db_input($signature).', NOW()';
+				    if(!db_query($sql, false))
+	                		$this->errors['err']='Unable to create config settings (#7)';
+				}
+			}
         }
 
         if($this->errors) return false; //Abort on internal errors.
