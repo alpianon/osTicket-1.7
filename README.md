@@ -23,6 +23,9 @@ time).
 It is not exactly the best auth system ever :) but I just needed a quick 
 and dirty MOD to implement CC emails with a minimum of security.
 
+P.S. If you see strange comments in the code (like /\*__(\* ), do not worry:
+they are aimed at making this MOD easily portable to the Multilanguage MOD
+
 
 
 osTicket
