@@ -2336,7 +2336,9 @@ when a ticket is deleted, delete also cc emails associated with it */
 
         foreach($cc_emails_array as $cc_email) // INSERT cc_emails that are not already present in db
         {          
-             if(($cc_email != $ticket_email) && (!in_array($cc_email, $cc_emails_db_array)))
+             if(Validator::is_email($cc_email) 
+                 && ($cc_email != $ticket_email) 
+                 && (!in_array($cc_email, $cc_emails_db_array)))
             {
                  $sql='INSERT INTO '.TICKET_CC_EMAILS_TABLE
                      .' SET ticket_id='.db_input($ticket_id)
