@@ -62,9 +62,10 @@ class Ticket {
 
         $sql='SELECT  ticket.*, lock_id, dept_name, priority_desc '
             .' ,IF(sla.id IS NULL, NULL, DATE_ADD(ticket.created, INTERVAL sla.grace_period HOUR)) as sla_duedate '
-            .' ,count(attach.attach_id) as attachments '
-            /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (taken from WALTEREGO CC MULTIPLE EMAILS) */
-            .' ,GROUP_CONCAT(cc_emails.email) AS cc_emails'
+            /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD (partially taken from WALTEREGO CC MULTIPLE EMAILS
+            the two "distinct" were missing...) */
+            .' ,COUNT(DISTINCT attach.attach_id) as attachments '
+            .' ,GROUP_CONCAT(DISTINCT cc_emails.email) AS cc_emails'
             /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
             .' FROM '.TICKET_TABLE.' ticket '
             .' LEFT JOIN '.DEPT_TABLE.' dept ON (ticket.dept_id=dept.dept_id) '
