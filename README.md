@@ -1,6 +1,6 @@
 Basic Client Auth + CC Emails MOD
 =================================
-Starting from WalterEgo's work, I wrote a MOD implementing full support 
+Starting from WalterEgo's work, I am writing a MOD implementing full support 
 for CC emails AND simple password authentication for clients, therefore
 avoiding security issues (see here
 https://github.com/osTicket/osTicket-1.7/issues/506#issuecomment-14901859)
