@@ -157,7 +157,9 @@ class Ticket {
         if(!is_object($client) && !($client=Client::lookup($client)))
             return false;
 
-        if(!strcasecmp($client->getEmail(), $this->getEmail()))
+/* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+        if((strcasecmp($client->getEmail(), $this->getEmail()) == 0) || stristr($client->getEmail(), $this->getCCEmails()))
+/* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
             return true;
 
         return ($cfg && $cfg->showRelatedTickets()
