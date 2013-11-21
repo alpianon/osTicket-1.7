@@ -22,23 +22,27 @@ require_once(INCLUDE_DIR.'class.client.php');
 require_once(INCLUDE_DIR.'class.ticket.php');
 
 if($_POST) {
-
-    if(($user=Client::login(trim($_POST['lticket']), trim($_POST['lemail']), null, $errors))) {
-        //XXX: Ticket owner is assumed.
-        @header('Location: tickets.php?id='.$user->getTicketID());
-        require_once('tickets.php'); //Just in case of 'header already sent' error.
-        exit;
+//Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+   $remember_me=($_POST['lremember']=='yes')?true:false;
+   if(($user=Client::login(trim($_POST['lticket']), trim($_POST['lemail']), null, $errors, md5(trim($_POST['lpass'])), $remember_me))) {
+	        unset($_POST['lpass']);
+		if(trim($_POST['lticket'])){
+		//XXX: Ticket owner is assumed.
+		@header('Location: tickets.php?id='.$user->getTicketID());
+		require_once('tickets.php'); //Just in case of 'header already sent' error.
+		exit;
 		}else{ // if no ticket no. is provided, go to the ticket list
 		   @header('Location: tickets.php');
 		   require_once('tickets.php'); //Just in case of 'header already sent' error.
 		   exit;
 		}
-    } elseif(!$errors['err']) {
-        $errors['err'] = 'Authentication error - try again!';
-    }
+	} elseif(!$errors['err']) {
+		$errors['err'] = __('Authentication error - try again!');
+	}
 	unset($_POST['lpass']);
 }
 // End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+
 
 $nav = new UserNav();
 $nav->setActiveNav('status');
