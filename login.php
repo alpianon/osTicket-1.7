@@ -37,7 +37,7 @@ if($_POST) {
 		   exit;
 		}
 	} elseif(!$errors['err']) {
-		$errors['err'] = __('Authentication error - try again!');
+		$errors['err'] = /*__(*/'Authentication error - try again!'/*)*/;
 	}
 	unset($_POST['lpass']);
 }
