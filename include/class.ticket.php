@@ -158,7 +158,8 @@ class Ticket {
             return false;
 
 /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
-        if((strcasecmp($client->getEmail(), $this->getEmail()) == 0) || stristr($client->getEmail(), $this->getCCEmails()))
+        if((strcasecmp($client->getEmail(), $this->getEmail()) == 0) || 
+            ($this->getCCEmails() && stristr($client->getEmail(), $this->getCCEmails())))
 /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
             return true;
 
