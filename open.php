@@ -57,12 +57,9 @@ if($ticket
             (($topic = $ticket->getTopic()) && ($page = $topic->getPage()))
             || ($page = $cfg->getThankYouPage())
             )) { //Thank the user and promise speedy resolution!
-    //Hide ticket number -  it should only be delivered via email for security reasons.
-    echo Format::safe_html($ticket->replaceVars(str_replace(
-                    array('%{ticket.number}', '%{ticket.extId}', '%{ticket}'), //ticket number vars.
-                    array_fill(0, 3, 'XXXXXX'),
-                    $page->getBody()
-                    )));
+    //Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD: login is protected by pwd, we can deliver ticket no. here!
+    echo Format::safe_html($ticket->replaceVars($page->getBody()));
+    //End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 } else {
     require(CLIENTINC_DIR.'open.inc.php');
 }
