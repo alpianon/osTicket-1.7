@@ -912,10 +912,12 @@ needed to enable staff to modify cc emails */
         //If enabled...send confirmation to user. ( New Message AutoResponse)
         if($email && $tpl && ($msg=$tpl->getNewMessageAutorepMsgTemplate())) {
         /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
-         enable %{message} variable in template - more than one client may post the message with this MOD, 
-         others may want to know the message that have been posted */
+         enable %{message} and %{message.poster} variables in template
+         more than one client may post the message with this MOD, 
+         others may want to know who posted what */
             $msg = $this->replaceVars($msg->asArray(),
-                            array('message' => $message, 'signature' => ($dept && $dept->isPublic())?$dept->getSignature():''));
+                            array('message' => $message, 'message.poster' => $message->getPoster(), 
+                            'signature' => ($dept && $dept->isPublic())?$dept->getSignature():''));
         /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
 
             //Reply separator tag.
