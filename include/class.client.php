@@ -197,10 +197,14 @@ class Client {
         elseif(!($res=db_query($sql)) || !db_num_rows($res))
             $errors['login'] = /*__(*/'this email has not been registered yet'/*)*/;
         $spwd=db_fetch_array($res);
-// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
+
 
         //Bail out on error.
-        if($errors) return false;
+        if($errors) {
+                unset($spwd); // we do not need it any more	
+        	return false;
+        }
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
 /* Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD
 
