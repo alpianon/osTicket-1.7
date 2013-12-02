@@ -2271,8 +2271,10 @@ when a ticket is deleted, delete also cc emails associated with it */
             if (isset($response))
                 $references = array($response->getEmailMessageId(), $references);
             $options = array('references' => $references);
+// Start EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD 
             $email->send($ticket->getEmail(), $msg['subj'], $msg['body'], $attachments,
-                $options);
+                $options, $ticket->getCCEmails() );
+// End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD 
         }
 
         return $ticket;
