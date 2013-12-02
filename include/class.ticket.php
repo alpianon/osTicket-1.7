@@ -2312,7 +2312,7 @@ when a ticket is deleted, delete also cc emails associated with it */
         	$sql='INSERT INTO '.CLIENT_PASSWORDS_TABLE.' SET email='.db_input($email).' ,password='.db_input(md5($rpwd));
         	if(db_query($sql)){ 
         		$subject=/*__(*/'New Account created for you on '/*)*/.$cfg->getTitle();
-        		$message=sprintf(/*__(*/'A new account has been automatically created for %1$s on %2$s. Password is %3$s (you can login at %2$slogin.php)'/*)*/,$email,$cfg->getUrl(),$rpwd);
+        		$message=str_replace('nwln', "\n", sprintf(__('A new account has been automatically created for %1$s on %2$s.nwlnnwlnYour password is %3$snwlnnwlnYou can login at %2$slogin.phpnwlnnwlnWe suggest that you change your password at first login by clicking on Change Password'),$email,$cfg->getUrl(),$rpwd));
         		Mailer::sendmail($email, $subject, $message, $cfg->getAlertEmail()->getEmail());
         	}
         	unset($rpwd);
