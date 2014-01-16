@@ -1387,9 +1387,11 @@ we do not use auth token any more - do not send it in email messages sent to use
          $to_list=$this->getEmail();  // message has not been sent via email, send autoreply to everyone
          $cc_list=$this->getCCEmails();
         }
-        if($to_list) // if no one has to be notified, do not send autoreply!
-          $this->onMessage($autorespond, $message, $to_list, $cc_list); //must be called b4 sending alerts to staff.       
+        $autorespond=$to_list?$autorespond:false; // if no one has to be notified, do not send autoreply!
+        
+        $this->onMessage($autorespond, $message, $to_list, $cc_list); //must be called b4 sending alerts to staff.
         /* End EDIT for CC_EMAILS+BASIC_CLIENT_AUTH MOD */
+
 
         $dept = $this->getDept();
 
